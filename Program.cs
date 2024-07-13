@@ -1,7 +1,13 @@
+using azure_app_srin.Data;
+using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
+
+var connection = builder.Configuration.GetConnectionString("AzureSqlConnction");
+builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connection));
+builder.Services.AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
